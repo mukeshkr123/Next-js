@@ -65,6 +65,19 @@ Storing data somewhere that is faster to access ==> Data sources
 2.  File System
 3.  Network
 
---> we can control caching in fetch() `const res = await fetch("https://jsonplaceholder.typicode.com/users", {
+--> we can control caching in fetch()
+`const res = await fetch("https://jsonplaceholder.typicode.com/users", {
     next: { revalidate: 10 },
   });`
+
+## Static and Dynamic Rendering
+
+==> Static Rendering --> Render at build time `npm eun build `
+==> Dynamic Rendering --> Render at request time
+
+Rendering :-
+
+1. Client-side
+2. Server-side :-
+   a. static (at build time )
+   b. Dynamic rendering (at request time)
