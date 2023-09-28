@@ -37,3 +37,20 @@ d . Use effects
 \*\* All components inside the app folder by default server components
 
 ==> To use the browser events we use `"use client"` in a separate where it is necessary
+
+## Data fetching
+
+==> Client
+
+1. useState() + useEffect()
+2. React Query
+   -large bundles
+   -Resource intensive
+   -No Seo
+   -Less secure
+   -Extra roundtrip to server
+
+==> Server
+
+- we can use fetch() for data fetching `const res = await fetch("https://jsonplaceholder.typicode.com/users");
+const users: User[] = await res.json();`
