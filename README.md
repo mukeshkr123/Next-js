@@ -52,5 +52,19 @@ d . Use effects
 
 ==> Server
 
-- we can use fetch() for data fetching `const res = await fetch("https://jsonplaceholder.typicode.com/users");
+1. we can use fetch() for data fetching
+
+`const res = await fetch("https://jsonplaceholder.typicode.com/users");
 const users: User[] = await res.json();`
+
+## Caching
+
+Storing data somewhere that is faster to access ==> Data sources
+
+1.  Memory
+2.  File System
+3.  Network
+
+--> we can control caching in fetch() `const res = await fetch("https://jsonplaceholder.typicode.com/users", {
+    next: { revalidate: 10 },
+  });`
