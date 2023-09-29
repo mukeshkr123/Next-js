@@ -1,6 +1,3 @@
-Certainly, I can help you format and optimize the content for your README.md. Here's your content with improved formatting and organization:
-
-````markdown
 # Next.js
 
 ## Creating Your First Next.js App
@@ -10,7 +7,6 @@ To create your first Next.js app, you can use the following command:
 ```bash
 npx create-next-app
 ```
-````
 
 ## Navigation and Routing
 
@@ -144,7 +140,3 @@ To enhance Tailwind CSS, you can add the DaisyUI plugin:
    ```
 
 This configuration will help make your styles beautiful and optimized.
-
-```
-
-```
