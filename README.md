@@ -14,6 +14,8 @@
 
 --> Routing ==> `<Link href="/">  HOME  </Link>`
 
+## Client and Server rendering
+
 ==> Client side rendering
 
 1. Large bundles
@@ -81,3 +83,41 @@ Rendering :-
 2. Server-side :-
    a. static (at build time )
    b. Dynamic rendering (at request time)
+
+## Styling Next js
+
+## Global styles
+
+--> Don't use .classess to style any components in `global.css` due to adding more classes it should be more complex
+
+## CSS Modules
+
+--> postcss automatically genrate different classnames
+
+`/_ MyComponent.module.css _/
+.myComponent {
+background-color: lightblue;
+padding: 20px;
+}
+
+.title {
+font-size: 24px;
+}
+`
+
+To use this ->
+`// MyComponent.js
+import React from 'react';
+import styles from './MyComponent.module.css';
+
+function MyComponent() {
+return (
+
+<div className={styles.myComponent}>
+<h1 className={styles.title}>Hello, CSS Modules!</h1>
+</div>
+);
+}
+
+export default MyComponent;
+`
