@@ -178,3 +178,20 @@ Next.js allows you to create dynamic routes by defining routes with parameters. 
    ```
 
 These dynamic routes allow you to create pages that respond to different URL parameters, making your Next.js application flexible and data-driven.
+
+### Catc-ALL-Segments
+
+for `/products/grocery/dairy/milk`
+
+create `/products/[[...slug]]/page.tsx`
+
+and access slug
+
+```
+interface Props {
+  params: { slug: string[] };
+}
+const ProductPage = ({ params: { slug } }: Props) => {
+  return <div>ProductPage - {slug}</div>;
+};
+```
