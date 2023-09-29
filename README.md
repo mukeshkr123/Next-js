@@ -8,7 +8,7 @@ To create your first Next.js app, you can use the following command:
 npx create-next-app
 ```
 
-## Navigation and Routing
+## NEXT js overview
 
 ### Navigation
 
@@ -23,8 +23,6 @@ To implement routing, you can use the `<Link>` component like this:
 ```jsx
 <Link href="/">HOME</Link>
 ```
-
-## Client and Server Rendering
 
 ### Client-side Rendering
 
@@ -53,8 +51,6 @@ Server components cannot:
 
 All components inside the `app` folder by default are server components. To use browser events, you can use `"use client"` in a separate file where it is necessary.
 
-## Data Fetching
-
 ### Client-side Data Fetching
 
 Client-side data fetching options include:
@@ -71,7 +67,7 @@ const res = await fetch("https://jsonplaceholder.typicode.com/users");
 const users = await res.json();
 ```
 
-## Caching
+### Caching
 
 Caching involves storing data somewhere that is faster to access. Data sources can include memory, the file system, or the network. You can control caching in the `fetch()` function like this:
 
@@ -80,8 +76,6 @@ const res = await fetch("https://jsonplaceholder.typicode.com/users", {
   next: { revalidate: 10 },
 });
 ```
-
-## Static and Dynamic Rendering
 
 ### Static Rendering
 
@@ -104,7 +98,7 @@ Rendering options:
 
 Avoid using global styles to style components in `global.css` to prevent complexity. Consider using CSS Modules for better scoping and modularity.
 
-# Using CSS Modules in Next.js
+### Using CSS Modules in Next.js
 
 CSS Modules are a powerful way to scope and modularize your styles in Next.js applications. They automatically generate unique class names, ensuring that your styles don't clash with other components.
 
@@ -121,7 +115,7 @@ To use CSS Modules in your Next.js project:
    <div className={styles.title}>
    ```
 
-## Using Tailwind CSS
+### Using Tailwind CSS
 
 ### Using daisyUI
 
@@ -139,19 +133,48 @@ To enhance Tailwind CSS, you can add the DaisyUI plugin:
    plugins: [require("daisyui")];
    ```
 
-This configuration will help make your styles beautiful and optimized.
+## Routing and Navigation in Next.js
 
-## Routing and Navigation
+### Routing Overview
 
-### Routing overview
+In Next.js, routing is handled through a special file structure. Here are some key files and concepts:
 
-Special files ->
+1. **`page.tsx`**: This represents a page route. For example, `page.tsx` corresponds to the root route (`/`).
 
-```
-1. page.tsx
-2. layout.tsx
-3. loading.tsx
-4. route.tsx
-5. not-found.tsx
+2. **`layout.tsx`**: This file defines the layout for your pages, providing a common structure for different parts of your application.
 
-```
+3. **`loading.tsx`**: This file can be used to display loading indicators or animations while data is being fetched.
+
+4. **`route.tsx`**: This file can be used to represent a specific route in your application.
+
+5. **`not-found.tsx`**: This file is used to handle 404 errors when a route is not found.
+
+### Dynamic Routes
+
+Next.js allows you to create dynamic routes by defining routes with parameters. Here's how you can set up dynamic routes:
+
+1. For `/users/:id`:
+
+   Create a file like `/users/[id]/page.tsx` and access the `id` parameter like this:
+
+   ```jsx
+   const UserDetailsPage = ({ params: { id } }: Props) => {
+     return <div>UserDetailsPage {id}</div>;
+   };
+   ```
+
+2. For `/users/:id/photos/:photoid`:
+
+   Create a file like `/users/[id]/photos/[photoid]/page.tsx` and access the `id` and `photoId` parameters:
+
+   ```jsx
+   const PhotoPage = ({ params: { id, photoId } }: Props) => {
+     return (
+       <div>
+         PhotoPage {id} / {photoId}
+       </div>
+     );
+   };
+   ```
+
+These dynamic routes allow you to create pages that respond to different URL parameters, making your Next.js application flexible and data-driven.
