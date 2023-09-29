@@ -179,7 +179,7 @@ Next.js allows you to create dynamic routes by defining routes with parameters. 
 
 These dynamic routes allow you to create pages that respond to different URL parameters, making your Next.js application flexible and data-driven.
 
-### Catc-ALL-Segments
+### Catch-ALL-Segments
 
 for `/products/grocery/dairy/milk`
 
