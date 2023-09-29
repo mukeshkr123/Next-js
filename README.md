@@ -140,3 +140,18 @@ To enhance Tailwind CSS, you can add the DaisyUI plugin:
    ```
 
 This configuration will help make your styles beautiful and optimized.
+
+## Routing and Navigation
+
+### Routing overview
+
+Special files ->
+
+```
+1. page.tsx
+2. layout.tsx
+3. loading.tsx
+4. route.tsx
+5. not-found.tsx
+
+```
