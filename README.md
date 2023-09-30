@@ -292,3 +292,36 @@ const loading = () => {
   return <span className="loading loading-spinner loading-md"></span>;
 };
 ```
+
+### Handling Not Found
+
+1. Using `loading.tsx`- Create a Loading.tsx component in your components directory.
+
+```jsx
+const Loading = () => {
+  return (
+    <div className="loading">
+      <div className="spinner"></div>
+      <p>Loading...</p>
+    </div>
+  );
+```
+
+2. For custom notfound for different part
+
+   -( `/users/:id`)
+
+```jsx
+const UserDetailsPage = ({ params: { id } }: Props) => {
+  if (id > 10) notFound();
+  return <div>UserDetailsPage {id}</div>;
+};
+```
+
+- their custom not found page -(`/users/not-found.tsx`)
+
+```jsx
+const NotFoundPage = () => {
+  return <div>This user doesn't exist</div>;
+};
+```
