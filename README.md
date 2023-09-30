@@ -250,9 +250,8 @@ export default function RootLayout({
 Pre-fetches links that are in the viewport .
 Caches pages on the client.
 
-``jsx
-
-<Link href={"/users/new"} className="btn btn-primary ">New User</Link>``
+`<Link href={"/users/new"} className="btn btn-primary ">New User</Link>
+`
 
 ### Programmatic Navigation
 
@@ -273,4 +272,23 @@ const NewusersPage = () => {
 };
 
 export default NewusersPage;
+```
+
+### Showing Loading UIs
+
+1. The `<Suspense>` component declares a loading boundary,
+
+```jsx
+<Suspense fallback={<LoadingSpinner />}>
+  {/* Async components or data fetching operations */}
+  <UserTable sortOrder={sortOrder} />
+</Suspense>
+```
+
+2. Using the (`loading.tsx`)
+
+```jsx
+const loading = () => {
+  return <span className="loading loading-spinner loading-md"></span>;
+};
 ```
