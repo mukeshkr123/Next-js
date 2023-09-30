@@ -309,7 +309,7 @@ const Loading = () => {
 
 2. For custom notfound for different part
 
-   -( `/users/:id`)
+   -( `/users/[id]/page.tsx`)
 
 ```jsx
 const UserDetailsPage = ({ params: { id } }: Props) => {
@@ -325,3 +325,31 @@ const NotFoundPage = () => {
   return <div>This user doesn't exist</div>;
 };
 ```
+
+### Handling Unexpected Error
+
+-- using (`error.jsx`) in the page directry
+
+```jsx
+"use client";
+import React from "react";
+interface Props {
+  error: Error;
+  reset: () => void;
+}
+const ErrorPage = ({ error, reset }: Props) => {
+  console.log(error);
+  return (
+    <>
+      <div>An unexpected error has occurred</div>
+      <button className="btn" onClick={() => reset()}>
+        Retry
+      </button>
+    </>
+  );
+};
+
+export default ErrorPage;
+```
+
+**_we can add different (`error.tsx`) for differrent part of the component _**
