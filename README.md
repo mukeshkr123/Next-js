@@ -196,7 +196,60 @@ const ProductPage = ({ params: { slug } }: Props) => {
 };
 ```
 
+# Project README
+
+## Description
+
+This project includes:
+
+- Accessing the query string parameter `sortOrder` from the URL.
+- Layouts for admin pages.
+
 ### Access Query String
 
--to acess => `/users?sortOrder=email`
-`const UsersPage = async ({ searchParams: { sortOrder } }: Props) => {}`
+To access `sortOrder` from the URL, use this code:
+
+```javascript
+const UsersPage = async ({ searchParams: { sortOrder } }: Props) => {
+  // Use sortOrder here
+};
+```
+
+### Layouts
+
+**_Admin Layout_** (`/admin/layout.tsx`)
+
+```
+const AdminLayout = ({ children }: Props) => (
+  <div className="flex">
+    <aside className="bg-slate-400 p-5 m-5">Admin Side Bar</aside>
+    <div>{children}</div>
+  </div>
+);
+```
+
+**_Admin Page_** (`/admin/page.tsx`)
+
+```
+const AdminHomePage = () => <div>AdminHomePage</div>;
+```
+
+**Main_Page_Navbar** (`/layout.tsx`)
+
+```
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en" data-theme="winter">
+      <body className={inter.className}>
+        <Navbar />
+        <main>{children}</main>
+      </body>
+    </html>
+  );
+}
+
+```
