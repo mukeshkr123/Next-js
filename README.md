@@ -196,15 +196,6 @@ const ProductPage = ({ params: { slug } }: Props) => {
 };
 ```
 
-# Project README
-
-## Description
-
-This project includes:
-
-- Accessing the query string parameter `sortOrder` from the URL.
-- Layouts for admin pages.
-
 ### Access Query String
 
 To access `sortOrder` from the URL, use this code:
