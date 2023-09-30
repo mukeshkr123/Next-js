@@ -358,7 +358,7 @@ export default ErrorPage;
 
 ### Getting a collection of objects
 
-(`api/users/route.tex`)
+(`api/users/route.tsx`)
 
 ```jsx
 import { NextRequest, NextResponse } from "next/server";
@@ -374,5 +374,24 @@ export function GET(request: NextRequest) {
       name: "umesh",
     },
   ]);
+}
+```
+
+### Getting a single object
+
+```jsx
+import { NextRequest, NextResponse } from "next/server";
+
+export function GET(
+  request: NextRequest,
+  { params }: { params: { id: number } }
+) {
+  if (params.id > 10)
+    return NextResponse.json({ error: "User not found" }, { status: 404 });
+
+  return NextResponse.json({
+    id: 1,
+    name: "mukesh",
+  });
 }
 ```
