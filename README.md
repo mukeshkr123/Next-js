@@ -195,3 +195,8 @@ const ProductPage = ({ params: { slug } }: Props) => {
   return <div>ProductPage - {slug}</div>;
 };
 ```
+
+### Access Query String
+
+-to acess => `/users?sortOrder=email`
+`const UsersPage = async ({ searchParams: { sortOrder } }: Props) => {}`
