@@ -187,7 +187,7 @@ create `/products/[[...slug]]/page.tsx`
 
 and access slug
 
-```
+```jsx
 interface Props {
   params: { slug: string[] };
 }
@@ -210,7 +210,7 @@ const UsersPage = async ({ searchParams: { sortOrder } }: Props) => {
 
 **_Admin Layout_** (`/admin/layout.tsx`)
 
-```
+```jsx
 const AdminLayout = ({ children }: Props) => (
   <div className="flex">
     <aside className="bg-slate-400 p-5 m-5">Admin Side Bar</aside>
@@ -227,11 +227,11 @@ const AdminHomePage = () => <div>AdminHomePage</div>;
 
 **Main_Page_Navbar** (`/layout.tsx`)
 
-```
+```jsx
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode,
 }) {
   return (
     <html lang="en" data-theme="winter">
@@ -242,5 +242,35 @@ export default function RootLayout({
     </html>
   );
 }
+```
 
+### Navigation
+
+**_Link_** - Only downloads the content of the target page.
+Pre-fetches links that are in the viewport .
+Caches pages on the client.
+
+``jsx
+
+<Link href={"/users/new"} className="btn btn-primary ">New User</Link>``
+
+### Programmatic Navigation
+
+```jsx
+"use client";
+
+import { useRouter } from "next/navigation"; // make sure to import from necxt/navigation
+
+const NewusersPage = () => {
+  const router = useRouter();
+  return (
+    <div>
+      <button className="btn btn-primary" onClick={() => router.push("/users")}>
+        Create
+      </button>
+    </div>
+  );
+};
+
+export default NewusersPage;
 ```
