@@ -353,3 +353,26 @@ export default ErrorPage;
 ```
 
 **_we can add different (`error.tsx`) for differrent part of the component _**
+
+## Buiding APIs
+
+### Getting a collection of objects
+
+(`api/users/route.tex`)
+
+```jsx
+import { NextRequest, NextResponse } from "next/server";
+
+export function GET(request: NextRequest) {
+  return NextResponse.json([
+    {
+      id: 1,
+      name: "mukesh",
+    },
+    {
+      id: 2,
+      name: "umesh",
+    },
+  ]);
+}
+```
