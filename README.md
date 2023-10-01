@@ -464,7 +464,7 @@ export function DELETE(
 }
 ```
 
-### Valudating requests with zod
+### Validating requests with zod
 
 `api/users/schem.ts`
 
@@ -588,6 +588,36 @@ import GoogleAnalyticsScript from "./GoogleAnalyticsScript";
 <html lang="en" data-theme="winter">
   <GoogleAnalyticsScript />
   <body className={inter.className}>
+    <Navbar />
+    <main>{children}</main>
+  </body>
+</html>;
+```
+
+### Using Fonts
+
+**Use this in mainlayout.tsx**
+
+```jsx
+import { Inter, Roboto } from "next/font/google";
+import localFont from "next/font/local";
+
+const inter = Inter({ subsets: ["latin"] });
+
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+});
+
+//import custom font
+// const poppins = localFont({
+//   src: "../public/fonts/poppins.woff",
+//  variable:"--font-poppins" // custom css variable
+// });
+
+<html lang="en" data-theme="winter">
+  <GoogleAnalyticsScript />
+  <body className={roboto.className}>
     <Navbar />
     <main>{children}</main>
   </body>
