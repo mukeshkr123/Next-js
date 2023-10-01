@@ -358,7 +358,7 @@ export default ErrorPage;
 
 ### Getting a collection of objects
 
-(`api/users/route.tsx`)
+(`api/users/route.tsx`) -url- `/api/users`
 
 ```jsx
 import { NextRequest, NextResponse } from "next/server";
@@ -379,6 +379,8 @@ export function GET(request: NextRequest) {
 
 ### Getting a single object
 
+(`api/users/[id]/route.tsx`) -url- `/api/users/:id`
+
 ```jsx
 import { NextRequest, NextResponse } from "next/server";
 
@@ -393,5 +395,49 @@ export function GET(
     id: 1,
     name: "mukesh",
   });
+}
+```
+
+### Creating an object
+
+(`api/users/route.tsx`) -url- `/api/users` method-
+
+```jsx
+export async function POST(request: NextRequest) {
+  const body = await request.json();
+  if (!body.name)
+    return NextResponse.json({ error: "Name is required" }, { status: 404 });
+  return NextResponse.json(
+    {
+      id: 1,
+      name: body.name,
+    },
+    { status: 201 }
+  );
+}
+```
+
+### Updating an Object
+
+(`api/users/[id]/route.tsx`) -url- `/api/users/:id`
+
+```jsx
+//Updating a collection
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: { id: number } }
+) {
+  const body = await request.json();
+  if (!body.name)
+    return NextResponse.json({ error: "Name is required" }, { status: 400 });
+  if (params.id > 10)
+    return NextResponse.json(
+      {
+        error: "User not found",
+      },
+      { status: 404 }
+    );
+
+  return NextResponse.json({ id: 1, name: body.name }, { status: 200 });
 }
 ```
