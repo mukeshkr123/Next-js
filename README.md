@@ -481,6 +481,7 @@ export default schema;
 `api/users/[id]/route.tsx`
 
 ```jsx
+import schema from "./schema.ts";
 //Updating a collection
 export async function PUT(
   request: NextRequest,
