@@ -12,7 +12,8 @@
     "fast-sort": "^3.4.0",
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "zod": "^3.22.2"
   },
   "devDependencies": {
     "@types/node": "latest",
