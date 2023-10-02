@@ -642,9 +642,9 @@ This technique helps ensure that the request body adheres to specified validatio
 
 By following these examples and techniques, you can build robust APIs in Next.js that handle various CRUD (Create, Read, Update, Delete) operations and perform input validation when necessary.
 
-# Next.js Application Optimization Guide
+## Next.js Application Optimization
 
-## Table of Contents
+### Table of Contents
 
 - [Optimizing Images](#optimizing-images)
 - [Using Third-Party Scripts](#using-third-party-scripts)
@@ -652,7 +652,7 @@ By following these examples and techniques, you can build robust APIs in Next.js
 - [Search Engine Optimization (SEO)](#search-engine-optimization-seo)
 - [Lazy Loading Components and Libraries](#lazy-loading-components-and-libraries)
 
-## Optimizing Images
+### Optimizing Images
 
 ### Using the `next/image` Component
 
@@ -689,7 +689,7 @@ const nextConfig = {
 module.exports = nextConfig;
 ```
 
-## Using Third-Party Scripts
+### Using Third-Party Scripts
 
 ### Integrating Google Analytics
 
@@ -722,9 +722,9 @@ import GoogleAnalyticsScript from "./GoogleAnalyticsScript";
 </html>;
 ```
 
-## Loading Custom Fonts
+### Loading Custom Fonts
 
-### Using Google Fonts
+#### Using Google Fonts
 
 Load custom fonts in your Next.js application using the `next/font/google` package. Here's an example with the Inter and Roboto fonts:
 
@@ -743,7 +743,7 @@ const roboto = Roboto({
 </html>;
 ```
 
-## Search Engine Optimization (SEO)
+### Search Engine Optimization (SEO)
 
 ### Dynamic Metadata Generation
 
@@ -764,7 +764,7 @@ export async function genrateMetadata(): Promise<Metadata> {
 }
 ```
 
-## Lazy Loading Components and Libraries
+### Lazy Loading Components and Libraries
 
 ### Lazy Loading Heavy Components
 
@@ -797,3 +797,31 @@ You can also lazy load libraries like lodash when they are needed:
 ```
 
 ---
+
+## Database integration
+
+**Databse Engines**
+1.MySQL
+2.PostgreSQL
+3.MongoDB
+
+### Setting Up Prisma
+
+1. Install `npm i prisma`
+2. setup prisma `npx prisma init` -> it creates a prisma folder with the file `schema.prisma` and also create .env having `DATABASE_URL` having postgressSql connnection
+3. connect to mySql configure `DATABASE_URL="mysql://root:Mukeshkr123@localhost:3306/next-app-db"`- and in schema.prism -
+
+```prisma
+  // This is your Prisma schema file,
+  // learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+provider = "prisma-client-js"
+}
+
+datasource db {
+provider = "mysql"
+url = env("DATABASE_URL")
+}
+
+```
