@@ -825,3 +825,19 @@ url = env("DATABASE_URL")
 }
 
 ```
+
+### Defining models
+
+--for format model - `npx prisma format`
+
+**Create model in `schema.prism` file**
+
+```prisma
+model User {
+  id        Int     @id @default(autoincrement())
+  email     String  @unique
+  name      String
+  followers Int     @default(0)
+  isActive  Boolean @default(true)
+}
+```
