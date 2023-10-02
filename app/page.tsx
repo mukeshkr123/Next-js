@@ -1,13 +1,20 @@
-import Image from "next/image";
-import Link from "next/link";
-import ProductCard from "./components/ProductCard/ProductCard";
+"use client";
+import { useState } from "react";
 
 export default function Home() {
   return (
     <main>
-      Hello world
-      <Link href={"/users"}>Users</Link>
-      <ProductCard />
+      <h1>Hello world</h1>
+      <button
+        onClick={async () => {
+          const _ = (await import("lodash")).default;
+          const users = [{ name: "c" }, { name: "b" }, { name: "a" }];
+          const sorted = _.orderBy(users, ["name"]);
+          console.log(sorted);
+        }}
+      >
+        Show
+      </button>
     </main>
   );
 }

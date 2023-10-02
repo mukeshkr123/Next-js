@@ -647,3 +647,78 @@ export async function genrateMetadata(): Promise<Metadata> {
   };
 }
 ```
+
+### Lazy Loading
+
+Lazy loading is a technique used in web development to improve the performance and loading times of web applications by deferring the loading of heavy or less essential components until they are actually needed. This can help reduce the initial load time of a web page and improve the overall user experience. Here are two examples of lazy loading in a React application:
+
+#### Example 1: Lazy Loading a Heavy Component
+
+In this example, we are lazy loading a heavy component using Next.js and React. The component `HeavyComponent` is loaded dynamically when a button is clicked, rather than being loaded on the initial page load. This can be useful for improving the initial load time of a page that contains resource-intensive components.
+
+```jsx
+"use client";
+import { useState } from "react";
+import dynamic from "next/dynamic";
+
+// Dynamic import for HeavyComponent with server-side rendering (SSR) disabled
+const HeavyComponent = dynamic(() => import("./components/HeavyComponent"), {
+  ssr: false,
+  loading: () => <p>Loading....</p>,
+});
+
+export default function Home() {
+  const [isVisible, setVisible] = useState(false);
+
+  return (
+    <main>
+      <h1>Hello world</h1>
+      <button onClick={() => setVisible(true)}>Show</button>
+      {isVisible && <HeavyComponent />}
+    </main>
+  );
+}
+```
+
+In this code:
+
+- We use `dynamic` from Next.js to dynamically import `HeavyComponent`.
+- We set `ssr` to `false` to disable server-side rendering for this component.
+- We provide a loading indicator using the `loading` property to show a "Loading..." message while the component is being loaded asynchronously.
+
+#### Example 2: Lazy Loading a Library
+
+In this example, we demonstrate lazy loading a library (in this case, lodash) when a button is clicked. Lazy loading libraries can help reduce the initial bundle size of your application.
+
+```jsx
+"use client";
+import { useState } from "react";
+
+export default function Home() {
+  return (
+    <main>
+      <h1>Hello world</h1>
+      <button
+        onClick={async () => {
+          // Lazy load the lodash library
+          const _ = (await import("lodash")).default;
+
+          // Perform an operation with lodash (sorting an array of objects)
+          const users = [{ name: "c" }, { name: "b" }, { name: "a" }];
+          const sorted = _.orderBy(users, ["name"]);
+          console.log(sorted);
+        }}
+      >
+        Show
+      </button>
+    </main>
+  );
+}
+```
+
+In this code:
+
+- We use the `import()` function with the `await` keyword to lazily load the lodash library when the button is clicked.
+- Once the library is loaded, we use lodash to perform an operation (sorting an array of objects) and log the result to the console.
+
+These examples illustrate how lazy loading can be implemented in a React application to optimize the loading of heavy components or libraries, resulting in improved performance and user experience.
