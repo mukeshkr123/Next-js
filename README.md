@@ -1,66 +1,120 @@
-# Next.js
+# Next Js Guide
 
 ## Creating Your First Next.js App
 
-To create your first Next.js app, you can use the following command:
+### Step 1: Project Initialization
+
+Open your terminal or command prompt and navigate to the directory where you want to create your Next.js app. Then, run the following command:
 
 ```bash
-npx create-next-app
+npx create-next-app my-next-app
 ```
 
-## NEXT js overview
+Replace `my-next-app` with the name you want to give to your project. This command will create a new Next.js application in a directory named after your project name.
+
+### Step 2: Project Setup
+
+The `create-next-app` command will guide you through the setup process and ask you some questions:
+
+- Select your preferred package manager (npm or Yarn).
+- Choose whether to use TypeScript or JavaScript.
+- Set up ESLint for code linting and formatting.
+- Install required dependencies.
+
+Allow the command to complete the setup by following the prompts.
+
+### Step 3: Starting the Development Server
+
+Once the setup is complete, navigate to your project's directory using the terminal:
+
+```bash
+cd my-next-app
+```
+
+To start the development server and see your Next.js app in action, run the following command:
+
+```bash
+npm run dev
+```
+
+This command will start the development server, and you'll see a message indicating that your app is running at `http://localhost:3000`. Open your web browser and navigate to that URL to view your newly created Next.js app.
+
+### Step 4: Building Your App
+
+Now that your development server is running, you can start building your Next.js app. You can create pages, components, and styles as needed for your project. Any changes you make to your code will be automatically reflected in your local development server.
+
+### Step 5: Deployment
+
+When you're ready to deploy your Next.js app to a production environment, you can use various hosting platforms, such as Vercel, Netlify, or AWS. Each platform has its deployment process, so be sure to refer to their documentation for detailed instructions.
+
+That's it! You've successfully created your first Next.js app and are ready to start building and deploying your web applications. Enjoy developing with Next.js!
+
+## Next.js Overview
+
+Next.js is a powerful React framework for building modern web applications with a focus on server-side rendering and efficient routing. Let's delve deeper into its key features and concepts.
 
 ### Navigation
 
-1. To create a page at `https://localhost/3000/users`, you can create a file named `page.tsx` inside the `app -> users` directory.
+1. **Creating Pages:** In Next.js, you can create pages by adding files to the `pages` directory. For example, to create a page at `https://localhost:3000/users`, you can create a `page.tsx` file inside the `pages/users` directory.
 
-2. For a new user page at `https://localhost/3000/users/new`, create another `page.tsx` file inside the `app -> users -> new` directory.
+2. **Nested Pages:** For nested routes like `https://localhost:3000/users/new`, you can create another `page.tsx` file inside the `pages/users/new` directory. Next.js automatically handles the routing.
 
 ### Routing
 
-To implement routing, you can use the `<Link>` component like this:
+Routing in Next.js is straightforward. To create links to different pages, you can use the `<Link>` component, as shown below:
 
 ```jsx
-<Link href="/">HOME</Link>
+import Link from "next/link";
+
+<Link href="/">HOME</Link>;
 ```
 
-### Client-side Rendering
+This component allows you to define navigation links within your application easily.
 
-Client-side rendering has the following characteristics:
+### Client-side Rendering (CSR)
 
-1. Large bundles.
-2. Resource-intensive.
-3. No SEO.
-4. Less secure.
+Client-side rendering (CSR) is a rendering approach where the initial HTML page is minimal, and the majority of content is loaded and rendered on the client-side. However, CSR has some downsides:
 
-### Server-side Rendering
+1. **Large Bundles:** CSR can result in large JavaScript bundles, leading to slower page loads.
 
-Server-side rendering has the following benefits:
+2. **Resource-Intensive:** It can be resource-intensive as it relies on the client's device to handle rendering.
 
-1. Smaller bundles.
-2. Resource-efficient.
-3. SEO-friendly.
-4. More secure.
+3. **Limited SEO:** SEO optimization can be challenging since search engines may have difficulty indexing client-rendered content.
 
-Server components cannot:
+4. **Security Concerns:** It can be less secure due to potential client-side vulnerabilities.
+
+### Server-side Rendering (SSR)
+
+Server-side rendering (SSR) is a rendering approach where the server generates the HTML for each page before sending it to the client. SSR offers several benefits:
+
+1. **Smaller Bundles:** SSR typically results in smaller JavaScript bundles, leading to faster page loads.
+
+2. **Resource-Efficient:** It offloads rendering to the server, reducing the client's workload.
+
+3. **SEO-Friendly:** SSR is inherently SEO-friendly since the server provides fully rendered HTML content to search engines.
+
+4. **Enhanced Security:** SSR can be more secure since sensitive logic remains on the server.
+
+However, server components in Next.js cannot perform the following client-side tasks:
 
 - Listen to browser events.
 - Access browser APIs.
 - Maintain state.
 - Use effects.
 
-All components inside the `app` folder by default are server components. To use browser events, you can use `"use client"` in a separate file where it is necessary.
+To enable client-side functionality in specific parts of your application, you can use `"use client"` in separate files.
 
 ### Client-side Data Fetching
 
 Client-side data fetching options include:
 
-1. `useState()` + `useEffect()`.
-2. React Query (Note: This can lead to large bundles, be resource-intensive, affect SEO, and be less secure with an extra roundtrip to the server).
+1. **`useState()` + `useEffect()`:** You can use React's built-in state management and lifecycle methods for data fetching on the client side.
+
+2. **React Query:** While powerful, React Query can lead to larger bundles, be resource-intensive, affect SEO due to extra roundtrips to the server, and introduce security concerns if not configured correctly.
 
 ### Server-side Data Fetching
 
-Server-side data fetching can be done using `fetch()`:
+Server-side data fetching can be achieved using the `fetch()` function, making API requests on the server before rendering the page. This approach ensures that the data is available before the initial render.
 
 ```javascript
 const res = await fetch("https://jsonplaceholder.typicode.com/users");
@@ -69,7 +123,7 @@ const users = await res.json();
 
 ### Caching
 
-Caching involves storing data somewhere that is faster to access. Data sources can include memory, the file system, or the network. You can control caching in the `fetch()` function like this:
+Caching involves storing data in a location that is faster to access, such as memory, the file system, or a network cache. You can control caching in the `fetch()` function by specifying caching options, such as `revalidate`.
 
 ```javascript
 const res = await fetch("https://jsonplaceholder.typicode.com/users", {
@@ -79,75 +133,151 @@ const res = await fetch("https://jsonplaceholder.typicode.com/users", {
 
 ### Static Rendering
 
-Static rendering involves rendering at build time using `npm run build`.
+Static rendering is the process of pre-rendering pages at build time using the `npm run build` command. This generates static HTML files for each page, resulting in fast and cacheable content.
 
 ### Dynamic Rendering
 
-Dynamic rendering involves rendering at request time.
+Dynamic rendering, on the other hand, involves rendering pages at request time. You have two options for dynamic rendering:
 
-Rendering options:
+1. **Client-side Rendering:** Content is loaded and rendered on the client side, which can be resource-intensive.
 
-1. Client-side rendering.
-2. Server-side rendering:
-   - Static (at build time).
-   - Dynamic rendering (at request time).
+2. **Server-side Rendering (SSR):**
+   - **Static SSR:** Content is generated at build time and served statically.
+   - **Dynamic SSR:** Content is generated at request time on the server.
+
+These rendering options allow you to choose the most suitable approach based on your application's requirements and performance considerations.
+
+Next.js is a versatile framework that empowers developers to create efficient and SEO-friendly web applications while providing flexibility in choosing rendering strategies. Understanding these concepts will help you make informed decisions when building with Next.js.
 
 ## Styling in Next.js
 
+Styling is a crucial aspect of building modern web applications. Next.js offers various approaches for styling your components. Let's explore how to manage styles, including using CSS Modules, integrating Tailwind CSS, and enhancing it with the DaisyUI plugin.
+
 ### Global Styles
 
-Avoid using global styles to style components in `global.css` to prevent complexity. Consider using CSS Modules for better scoping and modularity.
+Avoid using global styles (defined in a `global.css` file) to style individual components in your Next.js application. Global styles can lead to complexity, as they affect the entire application, making it challenging to manage styles for individual components.
 
 ### Using CSS Modules in Next.js
 
-CSS Modules are a powerful way to scope and modularize your styles in Next.js applications. They automatically generate unique class names, ensuring that your styles don't clash with other components.
-
-To use CSS Modules in your Next.js project:
+CSS Modules are a powerful way to manage styles in Next.js applications. They provide scoping and modularity by automatically generating unique class names for each CSS module. Here's how to use CSS Modules in your Next.js project:
 
 1. **Create a CSS Module**:
 
-   Start by creating a `.module.css` file for your component's styles. For example, if you have a component named `MyComponent`, you can create a corresponding `MyComponent.module.css` file.
+   Start by creating a `.module.css` file for the styles of your component. For example, if you have a component named `MyComponent`, you can create a corresponding `MyComponent.module.css` file.
+
+   ```css
+   /* MyComponent.module.css */
+   .title {
+     font-size: 24px;
+     color: #333;
+   }
+   ```
 
 2. **Use it in MyComponent**:
 
+   Import the styles from your CSS Module and apply them to your component elements. The generated class names will be scoped to the component.
+
    ```jsx
    import styles from "./MyComponent.module.css";
-   <div className={styles.title}>
+
+   const MyComponent = () => {
+     return <div className={styles.title}>Styled Title</div>;
+   };
    ```
 
-### Using Tailwind CSS
+By following this pattern, you can ensure that styles are encapsulated within the component, preventing conflicts with styles from other components.
 
-### Using daisyUI
+### Using Tailwind CSS in Next.js
 
-To enhance Tailwind CSS, you can add the DaisyUI plugin:
+[Tailwind CSS](https://tailwindcss.com/) is a popular utility-first CSS framework that can be seamlessly integrated into Next.js projects. To use Tailwind CSS in your Next.js application, follow these steps:
 
-1. Install DaisyUI:
+1. **Install Tailwind CSS**:
+
+   Install Tailwind CSS and its dependencies using npm or Yarn:
 
    ```bash
-   npm i -D daisyui@latest
+   npm install tailwindcss postcss autoprefixer
    ```
 
-2. Add the plugin to your `tailwind.config.ts` file:
+   Initialize Tailwind CSS configuration files:
+
+   ```bash
+   npx tailwindcss init -p
+   ```
+
+2. **Configure CSS**:
+
+   In your project's `tailwind.config.js` file, customize your styles by adding or modifying configuration options. Tailwind CSS provides extensive customization options to tailor your styles according to your project's needs.
+
+3. **Create Utility Classes**:
+
+   In your JSX files, you can apply Tailwind CSS utility classes directly to your elements to style them. For example:
+
+   ```jsx
+   const MyComponent = () => {
+     return (
+       <div className="bg-blue-500 text-white p-4">
+         This is a Tailwind CSS component
+       </div>
+     );
+   };
+   ```
+
+4. **Purge Unused Styles**:
+
+   In production builds, it's essential to optimize the bundle size by purging unused styles. Tailwind CSS has built-in support for this. Ensure that your Next.js configuration is set up to enable CSS purging.
+
+5. **Customization and Theming**:
+
+   Tailwind CSS allows for easy theming and customization. You can define your custom styles, colors, and more in the configuration file to match your project's design.
+
+### Using DaisyUI with Tailwind CSS
+
+[DaisyUI](https://daisyui.com/) is a plugin that enhances Tailwind CSS by providing additional utility classes and components. To integrate DaisyUI into your Tailwind CSS project within Next.js, follow these steps:
+
+1. **Install DaisyUI**:
+
+   Use npm or Yarn to install the DaisyUI plugin as a development dependency:
+
+   ```bash
+   npm install -D daisyui@latest
+   ```
+
+2. **Configure Tailwind CSS**:
+
+   Open your project's `tailwind.config.js` or `tailwind.config.ts` file, and add DaisyUI as a plugin to the `plugins` array:
 
    ```javascript
-   plugins: [require("daisyui")];
+   // tailwind.config.js or tailwind.config.ts
+
+   module.exports = {
+     // ... other configuration options
+
+     plugins: [require("daisyui")],
+   };
    ```
+
+   Ensure that DaisyUI is listed as a plugin within the `plugins` array.
+
+By integrating Tailwind CSS and optionally enhancing it with the DaisyUI plugin into your Next.js application, you can rapidly build stylish and responsive user interfaces while benefiting from its utility-first approach and extensive customization options.
 
 ## Routing and Navigation in Next.js
 
+Routing and navigation are essential aspects of building web applications. Next.js provides a powerful routing system that allows you to create dynamic routes and handle navigation seamlessly. Let's explore routing and navigation in Next.js in detail.
+
 ### Routing Overview
 
-In Next.js, routing is handled through a special file structure. Here are some key files and concepts:
+In Next.js, routing is managed through a special file structure. Here are some key files and concepts related to routing:
 
-1. **`page.tsx`**: This represents a page route. For example, `page.tsx` corresponds to the root route (`/`).
+1. **`page.tsx`**: Represents a page route. For example, `page.tsx` corresponds to the root route (`/`).
 
-2. **`layout.tsx`**: This file defines the layout for your pages, providing a common structure for different parts of your application.
+2. **`layout.tsx`**: Defines the layout for your pages, providing a common structure for different parts of your application.
 
-3. **`loading.tsx`**: This file can be used to display loading indicators or animations while data is being fetched.
+3. **`loading.tsx`**: Used to display loading indicators or animations while data is being fetched.
 
-4. **`route.tsx`**: This file can be used to represent a specific route in your application.
+4. **`route.tsx`**: Represents a specific route in your application.
 
-5. **`not-found.tsx`**: This file is used to handle 404 errors when a route is not found.
+5. **`not-found.tsx`**: Handles 404 errors when a route is not found.
 
 ### Dynamic Routes
 
@@ -181,24 +311,23 @@ These dynamic routes allow you to create pages that respond to different URL par
 
 ### Catch-ALL-Segments
 
-for `/products/grocery/dairy/milk`
-
-create `/products/[[...slug]]/page.tsx`
-
-and access slug
+To handle catch-all segments in your routes, such as `/products/grocery/dairy/milk`, you can create a file like `/products/[[...slug]]/page.tsx` and access the `slug` parameter:
 
 ```jsx
 interface Props {
   params: { slug: string[] };
 }
+
 const ProductPage = ({ params: { slug } }: Props) => {
   return <div>ProductPage - {slug}</div>;
 };
 ```
 
-### Access Query String
+This approach allows you to capture and work with multiple segments of the URL dynamically.
 
-To access `sortOrder` from the URL, use this code:
+### Accessing Query Parameters
+
+To access query parameters from the URL, such as `sortOrder`, you can use the following code:
 
 ```javascript
 const UsersPage = async ({ searchParams: { sortOrder } }: Props) => {
@@ -206,9 +335,13 @@ const UsersPage = async ({ searchParams: { sortOrder } }: Props) => {
 };
 ```
 
+This allows you to retrieve and utilize query parameters within your components or pages.
+
 ### Layouts
 
-**_Admin Layout_** (`/admin/layout.tsx`)
+Layouts are essential for providing a consistent structure to different parts of your application. In Next.js, you can define layouts and reuse them across multiple pages. For example, you can create an admin layout like this:
+
+**_Admin Layout_** (`/admin/layout.tsx`):
 
 ```jsx
 const AdminLayout = ({ children }: Props) => (
@@ -219,49 +352,44 @@ const AdminLayout = ({ children }: Props) => (
 );
 ```
 
-**_Admin Page_** (`/admin/page.tsx`)
+You can then use this layout in an admin page:
 
-```
+**_Admin Page_** (`/admin/page.tsx`):
+
+```jsx
 const AdminHomePage = () => <div>AdminHomePage</div>;
 ```
 
-**Main_Page_Navbar** (`/layout.tsx`)
-
-```jsx
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode,
-}) {
-  return (
-    <html lang="en" data-theme="winter">
-      <body className={inter.className}>
-        <Navbar />
-        <main>{children}</main>
-      </body>
-    </html>
-  );
-}
-```
+This way, you can maintain a consistent structure for admin-related pages.
 
 ### Navigation
 
-**_Link_** - Only downloads the content of the target page.
-Pre-fetches links that are in the viewport .
-Caches pages on the client.
+Next.js provides the `<Link>` component for declarative navigation within your application. It offers several advantages, including:
 
-`<Link href={"/users/new"} className="btn btn-primary ">New User</Link>
-`
+- Efficiently downloads the content of the target page.
+- Prefetches links in the viewport.
+- Caches pages on the client for faster navigation.
+
+Example usage of the `<Link>` component:
+
+```jsx
+<Link href="/users/new" className="btn btn-primary">
+  New User
+</Link>
+```
 
 ### Programmatic Navigation
+
+You can also perform programmatic navigation in Next.js using the `useRouter` hook. Here's an example of programmatic navigation on a button click:
 
 ```jsx
 "use client";
 
-import { useRouter } from "next/navigation"; // make sure to import from necxt/navigation
+import { useRouter } from "next/navigation"; // Make sure to import from next/navigation
 
-const NewusersPage = () => {
+const NewUsersPage = () => {
   const router = useRouter();
+
   return (
     <div>
       <button className="btn btn-primary" onClick={() => router.push("/users")}>
@@ -271,12 +399,16 @@ const NewusersPage = () => {
   );
 };
 
-export default NewusersPage;
+export default NewUsersPage;
 ```
+
+This code snippet uses the `router.push` method to navigate to the `/users` page when the button is clicked.
 
 ### Showing Loading UIs
 
-1. The `<Suspense>` component declares a loading boundary,
+To show loading UIs while fetching data or rendering components, you can use the `<Suspense>` component. It defines a loading boundary and allows you to display loading indicators or components while asynchronous operations are in progress.
+
+Example usage of `<Suspense>`:
 
 ```jsx
 <Suspense fallback={<LoadingSpinner />}>
@@ -285,60 +417,49 @@ export default NewusersPage;
 </Suspense>
 ```
 
-2. Using the (`loading.tsx`)
-
-```jsx
-const loading = () => {
-  return <span className="loading loading-spinner loading-md"></span>;
-};
-```
+You can create a `LoadingSpinner` component to provide a visually appealing loading indicator.
 
 ### Handling Not Found
 
-1. Using `loading.tsx`- Create a Loading.tsx component in your components directory.
+Next.js makes it easy to handle 404 errors when a route is not found. You can create custom not-found pages for different parts of your application. For example:
 
-```jsx
-const Loading = () => {
-  return (
-    <div className="loading">
-      <div className="spinner"></div>
-      <p>Loading...</p>
-    </div>
-  );
-```
+- In a specific page file (`/users/[id]/page.tsx`), you can check for a condition and trigger a not-found page:
 
-2. For custom notfound for different part
+  ```jsx
+  const UserDetailsPage = ({ params: { id } }: Props) => {
+    if (id > 10) notFound(); // Custom not-found logic
+    return <div>UserDetailsPage {id}</div>;
+  };
+  ```
 
-   -( `/users/[id]/page.tsx`)
+- You can create a custom not-found page (`/users/not-found.tsx`) to handle not-found errors:
 
-```jsx
-const UserDetailsPage = ({ params: { id } }: Props) => {
-  if (id > 10) notFound();
-  return <div>UserDetailsPage {id}</div>;
-};
-```
+  ```jsx
+  const NotFoundPage = () => {
+    return <div>This user doesn't exist</div>;
+  };
+  ```
 
-- their custom not found page -(`/users/not-found.tsx`)
+This approach allows you to customize not-found pages based on your application's needs.
 
-```jsx
-const NotFoundPage = () => {
-  return <div>This user doesn't exist</div>;
-};
-```
+### Handling Unexpected Errors
 
-### Handling Unexpected Error
+To handle unexpected errors in your Next.js application, you can create an `error.tsx` component in the page directory. This component can display an error message and provide a retry option for the user.
 
--- using (`error.jsx`) in the page directry
+Here's an example of an `error.tsx` component:
 
 ```jsx
 "use client";
 import React from "react";
+
 interface Props {
   error: Error;
   reset: () => void;
 }
+
 const ErrorPage = ({ error, reset }: Props) => {
   console.log(error);
+
   return (
     <>
       <div>An unexpected error has occurred</div>
@@ -352,13 +473,17 @@ const ErrorPage = ({ error, reset }: Props) => {
 export default ErrorPage;
 ```
 
-**_we can add different (`error.tsx`) for differrent part of the component _**
+You can use this component to display error messages and allow users to retry actions that resulted in errors.
 
-## Buiding APIs
+By understanding and implementing these routing and navigation concepts in Next.js, you can create dynamic and user-friendly web applications with ease.
 
-### Getting a collection of objects
+## Building APIs in Next.js
 
-(`api/users/route.tsx`) -url- `/api/users`
+Building APIs is a crucial part of many web applications. Next.js makes it easy to create APIs by organizing your API routes within your project structure. Let's explore how to create different types of API routes in Next.js.
+
+### Getting a Collection of Objects
+
+To create an API route that fetches a collection of objects, you can create a file like `api/users/route.tsx`. This route can respond to requests to `/api/users`.
 
 ```jsx
 import { NextRequest, NextResponse } from "next/server";
@@ -377,9 +502,11 @@ export function GET(request: NextRequest) {
 }
 ```
 
-### Getting a single object
+This code snippet defines a `GET` route that returns an array of user objects as JSON.
 
-(`api/users/[id]/route.tsx`) -url- `/api/users/:id`
+### Getting a Single Object
+
+To fetch a single object by ID, create an API route with a parameter. For example, you can create `api/users/[id]/route.tsx` to respond to requests to `/api/users/:id`.
 
 ```jsx
 import { NextRequest, NextResponse } from "next/server";
@@ -398,9 +525,11 @@ export function GET(
 }
 ```
 
-### Creating an object
+This route handles requests with a dynamic `id` parameter and returns the corresponding user object.
 
-(`api/users/route.tsx`) -url- `/api/users` method-
+### Creating an Object
+
+To create an object, implement a `POST` request handler in your API route. For example, `api/users/route.tsx` can handle `POST` requests to `/api/users`.
 
 ```jsx
 export async function POST(request: NextRequest) {
@@ -417,12 +546,14 @@ export async function POST(request: NextRequest) {
 }
 ```
 
+This code snippet parses the JSON request body, validates it, and responds with the created object.
+
 ### Updating an Object
 
-(`api/users/[id]/route.tsx`) -url- `/api/users/:id`
+To update an object, implement a `PUT` request handler in your API route. For example, `api/users/[id]/route.tsx` can handle `PUT` requests to `/api/users/:id`.
 
 ```jsx
-//Updating a collection
+// Updating a collection
 export async function PUT(
   request: NextRequest,
   { params }: { params: { id: number } }
@@ -442,12 +573,14 @@ export async function PUT(
 }
 ```
 
+This route handles `PUT` requests, updates the object, and responds with the updated object.
+
 ### Deleting an Object
 
-(`api/users/[id]/route.tsx`) -url- `/api/users/:id`
+To delete an object, create a `DELETE` request handler in your API route. For example, `api/users/[id]/route.tsx` can handle `DELETE` requests to `/api/users/:id`.
 
 ```jsx
-// deleting a object
+// Deleting an object
 export function DELETE(
   request: NextRequest,
   { params }: { params: { id: number } }
@@ -464,9 +597,11 @@ export function DELETE(
 }
 ```
 
-### Validating requests with zod
+This code snippet handles `DELETE` requests and responds with an empty JSON object upon successful deletion.
 
-`api/users/schem.ts`
+### Validating Requests with Zod
+
+You can validate request bodies with Zod to ensure that incoming data meets specific criteria. First, create a validation schema in a separate file, such as `api/users/schema.ts`.
 
 ```jsx
 import { z } from "zod";
@@ -478,11 +613,11 @@ const schema = z.object({
 export default schema;
 ```
 
-`api/users/[id]/route.tsx`
+Then, in your API route, import the validation schema and use it to validate incoming data before processing the request.
 
 ```jsx
 import schema from "./schema.ts";
-//Updating a collection
+// Updating a collection
 export async function PUT(
   request: NextRequest,
   { params }: { params: { id: number } }
@@ -503,43 +638,43 @@ export async function PUT(
 }
 ```
 
-**This technique is used to validation of request body of any request**
+This technique helps ensure that the request body adheres to specified validation rules.
 
-## Optimisation
+By following these examples and techniques, you can build robust APIs in Next.js that handle various CRUD (Create, Read, Update, Delete) operations and perform input validation when necessary.
 
-### Optimising images
+# Next.js Application Optimization Guide
 
-**Using next/image Component**
+## Table of Contents
+
+- [Optimizing Images](#optimizing-images)
+- [Using Third-Party Scripts](#using-third-party-scripts)
+- [Loading Custom Fonts](#loading-custom-fonts)
+- [Search Engine Optimization (SEO)](#search-engine-optimization-seo)
+- [Lazy Loading Components and Libraries](#lazy-loading-components-and-libraries)
+
+## Optimizing Images
+
+### Using the `next/image` Component
+
+The `next/image` component is a powerful tool for optimizing images in your Next.js application. It provides features like lazy loading, responsive images, and automatic optimization. Here's how to use it:
 
 ```jsx
 import Image from "next/image";
 
-export default async function Home() {
-  return (
-    <main className="relative h-screen">
-      <Image
-        src={
-          "https://images.unsplash.com/photo-1695653423034-d15c9f3d1328?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=871&q=80"
-        }
-        alt="coffee"
-        // width={200}
-        // height={200}
-        sizes="(max-width:480px)100vw, (max-width:768px) 50vw, 33vw "
-        fill
-        // style={{ objectFit: "cover" }}
-        className="object-cover"
-        // quality={75}
-        // priority
-      />
-    </main>
-  );
-}
+<main className="relative h-screen">
+  <Image
+    src="image-url.jpg"
+    alt="Image Alt Text"
+    // Other attributes like width, height, sizes, and more
+  />
+</main>;
 ```
 
-**Configuring next.config**
+### Configuring `next.config.js`
 
-```jsx
-/** @type {import('next').NextConfig} */
+To optimize remote images, configure your `next.config.js` to specify remote image patterns. This allows Next.js to optimize images from specific domains. Example:
+
+```javascript
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -554,53 +689,47 @@ const nextConfig = {
 module.exports = nextConfig;
 ```
 
-### Using Third-Party
+## Using Third-Party Scripts
 
-**1. Create a separate component in root directory**
+### Integrating Google Analytics
+
+You can integrate Google Analytics into your Next.js application using the `next/script` component. Create a separate component to include the Google Analytics script and add it to your layout:
 
 ```jsx
 import Script from "next/script";
-import React from "react";
 
 const GoogleAnalyticsScript = () => {
   return (
     <>
-      <Script async src="https://www.googletagmanager.com/gtag/js?id=TAG_ID" />
-      <Script>
-        {` window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-
-gtag('config', 'TAG_ID');`}
-      </Script>
+      <Script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=YOUR_TAG_ID"
+      />
+      <Script>{` // Google Analytics initialization code`}</Script>
     </>
   );
 };
-
-export default GoogleAnalyticsScript;
 ```
 
-**2. Use this in root layout.tsx**
+Include this component in your root layout:
 
 ```jsx
 import GoogleAnalyticsScript from "./GoogleAnalyticsScript";
 
 <html lang="en" data-theme="winter">
   <GoogleAnalyticsScript />
-  <body className={inter.className}>
-    <Navbar />
-    <main>{children}</main>
-  </body>
+  <body className={inter.className}>{/* Your content */}</body>
 </html>;
 ```
 
-### Using Fonts
+## Loading Custom Fonts
 
-**Use this in mainlayout.tsx**
+### Using Google Fonts
+
+Load custom fonts in your Next.js application using the `next/font/google` package. Here's an example with the Inter and Roboto fonts:
 
 ```jsx
 import { Inter, Roboto } from "next/font/google";
-import localFont from "next/font/local";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -609,38 +738,25 @@ const roboto = Roboto({
   weight: ["400", "500"],
 });
 
-//import custom font
-// const poppins = localFont({
-//   src: "../public/fonts/poppins.woff",
-//  variable:"--font-poppins" // custom css variable
-// });
-
 <html lang="en" data-theme="winter">
-  <GoogleAnalyticsScript />
-  <body className={roboto.className}>
-    <Navbar />
-    <main>{children}</main>
-  </body>
+  {/* Your font styles */}
 </html>;
 ```
 
-### Search Engine Optimisation
+## Search Engine Optimization (SEO)
 
-**To make seach engine friendly we must every page has a proper meta tags-**
+### Dynamic Metadata Generation
+
+To make your pages search engine-friendly, ensure that each page has proper meta tags. You can generate metadata dynamically using functions like `genrateMetadata()`. Example:
 
 ```jsx
 export const metadata: Metadata = {
   title: "Create Next App",
   description: "Generated by create next app",
 };
-```
 
-**To Dynamically create metadata**
-
-```jsx
-//generate metadata dynamically
 export async function genrateMetadata(): Promise<Metadata> {
-  const product = await fetch("");
+  const product = await fetch("..."); // Fetch data dynamically
   return {
     title: product.title,
     description: product.description,
@@ -648,77 +764,36 @@ export async function genrateMetadata(): Promise<Metadata> {
 }
 ```
 
-### Lazy Loading
+## Lazy Loading Components and Libraries
 
-Lazy loading is a technique used in web development to improve the performance and loading times of web applications by deferring the loading of heavy or less essential components until they are actually needed. This can help reduce the initial load time of a web page and improve the overall user experience. Here are two examples of lazy loading in a React application:
+### Lazy Loading Heavy Components
 
-#### Example 1: Lazy Loading a Heavy Component
-
-In this example, we are lazy loading a heavy component using Next.js and React. The component `HeavyComponent` is loaded dynamically when a button is clicked, rather than being loaded on the initial page load. This can be useful for improving the initial load time of a page that contains resource-intensive components.
+Use the `next/dynamic` package to lazy load heavy components. Disable server-side rendering (SSR) for these components if needed:
 
 ```jsx
-"use client";
-import { useState } from "react";
 import dynamic from "next/dynamic";
 
-// Dynamic import for HeavyComponent with server-side rendering (SSR) disabled
 const HeavyComponent = dynamic(() => import("./components/HeavyComponent"), {
   ssr: false,
   loading: () => <p>Loading....</p>,
 });
-
-export default function Home() {
-  const [isVisible, setVisible] = useState(false);
-
-  return (
-    <main>
-      <h1>Hello world</h1>
-      <button onClick={() => setVisible(true)}>Show</button>
-      {isVisible && <HeavyComponent />}
-    </main>
-  );
-}
 ```
 
-In this code:
+### Lazy Loading Libraries
 
-- We use `dynamic` from Next.js to dynamically import `HeavyComponent`.
-- We set `ssr` to `false` to disable server-side rendering for this component.
-- We provide a loading indicator using the `loading` property to show a "Loading..." message while the component is being loaded asynchronously.
-
-#### Example 2: Lazy Loading a Library
-
-In this example, we demonstrate lazy loading a library (in this case, lodash) when a button is clicked. Lazy loading libraries can help reduce the initial bundle size of your application.
+You can also lazy load libraries like lodash when they are needed:
 
 ```jsx
-"use client";
-import { useState } from "react";
+<button
+  onClick={async () => {
+    // Lazy load the lodash library
+    const _ = (await import("lodash")).default;
 
-export default function Home() {
-  return (
-    <main>
-      <h1>Hello world</h1>
-      <button
-        onClick={async () => {
-          // Lazy load the lodash library
-          const _ = (await import("lodash")).default;
-
-          // Perform an operation with lodash (sorting an array of objects)
-          const users = [{ name: "c" }, { name: "b" }, { name: "a" }];
-          const sorted = _.orderBy(users, ["name"]);
-          console.log(sorted);
-        }}
-      >
-        Show
-      </button>
-    </main>
-  );
-}
+    // Perform operations with lodash
+  }}
+>
+  Show
+</button>
 ```
 
-In this code:
-
-- We use the `import()` function with the `await` keyword to lazily load the lodash library when the button is clicked.
-- Once the library is loaded, we use lodash to perform an operation (sorting an array of objects) and log the result to the console.
-
-These examples illustrate how lazy loading can be implemented in a React application to optimize the loading of heavy components or libraries, resulting in improved performance and user experience.
+---
