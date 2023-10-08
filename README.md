@@ -841,3 +841,8 @@ model User {
   isActive  Boolean @default(true)
 }
 ```
+
+### Creating migrations
+
+for sql database run the command to create a migration
+`npx prisma migrate dev`
