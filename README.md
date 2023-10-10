@@ -846,3 +846,28 @@ model User {
 
 for sql database run the command to create a migration
 `npx prisma migrate dev`
+
+### create a prisma client
+
+create a file
+`client.ts` in root directory of prisma
+
+```jsx
+import { PrismaClient } from '@prisma/client'
+
+const prismaClientSingleton = () => {
+  return new PrismaClient()
+}
+
+type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>
+
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClientSingleton | undefined
+}
+
+const prisma = globalForPrisma.prisma ?? prismaClientSingleton()
+
+export default prisma
+
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+```
