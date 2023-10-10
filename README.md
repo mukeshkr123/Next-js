@@ -943,12 +943,65 @@ export async function POST(request: NextRequest) {
   if (!body.name)
     return NextResponse.json({ error: "Name is required" }, { status: 404 });
 
-  const user = await prisma.user.create({
+  const userExist = await prisma.user.findUnique({
+    where: {
+      email: body.email,
+    },
+  });
+
+  if (userExist)
+    return NextResponse.json(
+      { error: " Username already exists" },
+      { status: 400 }
+    );
+
+  const newUser = await prisma.user.create({
     data: {
       name: body.name,
       email: body.email,
     },
   });
-  return NextResponse.json(user, { status: 201 });
+  return NextResponse.json(newUser, { status: 201 });
+}
+```
+
+### Updating a user
+
+To update a single user by ID, use the following code in `api/users/[id]/route.ts`:
+
+```typescript
+//Updating a collection
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const body = await request.json();
+  const validation = schema.safeParse(body);
+  if (!validation.success)
+    return NextResponse.json(validation.error.errors, { status: 404 });
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: parseInt(params.id),
+    },
+  });
+
+  if (!user)
+    return NextResponse.json(
+      {
+        error: "User not found",
+      },
+      { status: 404 }
+    );
+
+  const updateUser = await prisma.user.update({
+    where: { id: user.id },
+    data: {
+      name: body.name,
+      email: body.email,
+    },
+  });
+
+  return NextResponse.json(updateUser);
 }
 ```
