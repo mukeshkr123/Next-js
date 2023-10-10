@@ -929,3 +929,26 @@ export async function GET(
   return NextResponse.json(user);
 }
 ```
+
+### Creating Data
+
+To create a single user by ID, use the following code in `api/users/[id]/route.ts`:
+
+```typescript
+import prisma from "@/prisma/client";
+
+//Create an object
+export async function POST(request: NextRequest) {
+  const body = await request.json();
+  if (!body.name)
+    return NextResponse.json({ error: "Name is required" }, { status: 404 });
+
+  const user = await prisma.user.create({
+    data: {
+      name: body.name,
+      email: body.email,
+    },
+  });
+  return NextResponse.json(user, { status: 201 });
+}
+```

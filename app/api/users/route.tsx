@@ -13,11 +13,12 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
   if (!body.name)
     return NextResponse.json({ error: "Name is required" }, { status: 404 });
-  return NextResponse.json(
-    {
-      id: 1,
+
+  const user = await prisma.user.create({
+    data: {
       name: body.name,
+      email: body.email,
     },
-    { status: 201 }
-  );
+  });
+  return NextResponse.json(user, { status: 201 });
 }
