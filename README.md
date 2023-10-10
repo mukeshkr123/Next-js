@@ -798,17 +798,17 @@ You can also lazy load libraries like lodash when they are needed:
 
 ---
 
-# Database Integration with Prisma
+## Database Integration with Prisma
 
 Prisma is a powerful database toolkit and Object-Relational Mapping (ORM) tool that makes it easy to work with databases in your Node.js applications. This guide will walk you through setting up Prisma with different database engines: MySQL, PostgreSQL, and MongoDB.
 
-## Database Engines
+### Database Engines
 
 1. MySQL
 2. PostgreSQL
 3. MongoDB
 
-## Setting Up Prisma
+### Setting Up Prisma
 
 ### Step 1: Install Prisma
 
@@ -892,7 +892,7 @@ export default prisma;
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 ```
 
-## Getting Data
+### Getting Data
 
 ### Get All Users
 
@@ -1035,29 +1035,50 @@ export async function DELETE(
 }
 ```
 
-## Uploading Files
+---
+
+## Uploading Files with Cloudinary
 
 ### Choosing a Cloud Platform
 
-1. Amazon S3
-2. Google Cloud
-3. Microsoft Azure
-4. Cloudinary
+When it comes to uploading and managing files in your web application, several cloud platforms offer robust solutions. Here are a few options to consider:
+
+1. **Amazon S3**
+2. **Google Cloud**
+3. **Microsoft Azure**
+4. **Cloudinary**
+
+This guide will focus on setting up file uploading with **Cloudinary**, a popular cloud-based media management platform.
 
 ### Setting up Cloudinary
 
-1. Signup cloudinary
-2. Run the following command `npm i next-cloudinary`
-3. Add this in .env `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME="<Your Cloud Name>"
-`
+To get started with Cloudinary, follow these steps:
 
-### Upload Files
+1. **Sign Up for Cloudinary**
 
-Create a component or page
+   Sign up for a Cloudinary account at [Cloudinary's website](https://cloudinary.com).
+
+2. **Install `next-cloudinary` Package**
+
+   Install the `next-cloudinary` package in your project using npm or yarn:
+
+   ```bash
+   npm install next-cloudinary
+   ```
+
+3. **Configure Your Environment Variables**
+
+   In your project's `.env` file, add your Cloudinary cloud name as follows:
+
+   ```env
+   NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME="<Your Cloud Name>"
+   ```
+
+### Uploading Files
+
+Create a component or page for file uploads in your application:
 
 ```jsx
-"use client";
-
 import { CldUploadWidget } from "next-cloudinary";
 import React from "react";
 
@@ -1066,7 +1087,7 @@ const UploadPage = () => {
     <CldUploadWidget uploadPreset="s0jas6ry">
       {({ open }) => (
         <button className="btn btn-primary" onClick={() => open()}>
-          `` Upload
+          Upload
         </button>
       )}
     </CldUploadWidget>
@@ -1076,11 +1097,11 @@ const UploadPage = () => {
 export default UploadPage;
 ```
 
-### Showing uploaded image
+### Displaying Uploaded Images
+
+To display uploaded images, you can use the following code:
 
 ```jsx
-"use client";
-
 import React, { useState } from "react";
 import { CldUploadWidget, CldImage } from "next-cloudinary";
 
@@ -1097,8 +1118,7 @@ const UploadPage = () => {
           src={publicId}
           width={270}
           height={180}
-          alt="
-      A Coffee Image"
+          alt="A Coffee Image"
         />
       )}
       <CldUploadWidget
