@@ -798,39 +798,57 @@ You can also lazy load libraries like lodash when they are needed:
 
 ---
 
-## Database integration
+# Database Integration with Prisma
 
-**Databse Engines**
-1.MySQL
-2.PostgreSQL
-3.MongoDB
+Prisma is a powerful database toolkit and Object-Relational Mapping (ORM) tool that makes it easy to work with databases in your Node.js applications. This guide will walk you through setting up Prisma with different database engines: MySQL, PostgreSQL, and MongoDB.
 
-### Setting Up Prisma
+## Database Engines
 
-1. Install `npm i prisma`
-2. setup prisma `npx prisma init` -> it creates a prisma folder with the file `schema.prisma` and also create .env having `DATABASE_URL` having postgressSql connnection
-3. connect to mySql configure `DATABASE_URL="mysql://root:Mukeshkr123@localhost:3306/next-app-db"`- and in schema.prism -
+1. MySQL
+2. PostgreSQL
+3. MongoDB
 
-```prisma
-  // This is your Prisma schema file,
-  // learn more about it in the docs: https://pris.ly/d/prisma-schema
+## Setting Up Prisma
 
-generator client {
-provider = "prisma-client-js"
-}
+### Step 1: Install Prisma
 
-datasource db {
-provider = "mysql"
-url = env("DATABASE_URL")
-}
+Install Prisma by running the following command:
 
+```bash
+npm install prisma
 ```
 
-### Defining models
+### Step 2: Initialize Prisma
 
---for format model - `npx prisma format`
+Run the following command to initialize Prisma in your project:
 
-**Create model in `schema.prism` file**
+```bash
+npx prisma init
+```
+
+This will create a `prisma` folder with a `schema.prisma` file and generate a `.env` file containing the `DATABASE_URL` connection string for PostgreSQL.
+
+### Step 3: Configure the Database
+
+#### PostgreSQL Configuration
+
+In the `.env` file, set the `DATABASE_URL` to your PostgreSQL connection string:
+
+```env
+DATABASE_URL="postgresql://user:password@localhost:5432/your-database"
+```
+
+#### MySQL Configuration
+
+In the `.env` file, set the `DATABASE_URL` to your MySQL connection string:
+
+```env
+DATABASE_URL="mysql://root:password@localhost:3306/your-database"
+```
+
+### Defining Models
+
+Define your data models in the `schema.prisma` file. For example:
 
 ```prisma
 model User {
@@ -842,32 +860,72 @@ model User {
 }
 ```
 
-### Creating migrations
+### Creating Migrations
 
-for sql database run the command to create a migration
-`npx prisma migrate dev`
+To create database migrations for SQL databases (MySQL or PostgreSQL), run the following command:
 
-### create a prisma client
+```bash
+npx prisma migrate dev
+```
 
-create a file
-`client.ts` in root directory of prisma
+### Creating a Prisma Client
 
-```jsx
-import { PrismaClient } from '@prisma/client'
+Create a `client.ts` file in the root directory of your project to instantiate the Prisma client. This ensures a single instance of the client is used throughout your application:
+
+```typescript
+import { PrismaClient } from "@prisma/client";
 
 const prismaClientSingleton = () => {
-  return new PrismaClient()
-}
+  return new PrismaClient();
+};
 
-type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>
+type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>;
 
 const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClientSingleton | undefined
+  prisma: PrismaClientSingleton | undefined;
+};
+
+const prisma = globalForPrisma.prisma ?? prismaClientSingleton();
+
+export default prisma;
+
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+```
+
+## Getting Data
+
+### Get All Users
+
+To retrieve all users, use the following code in `api/users/route.ts`:
+
+```typescript
+import prisma from "@/prisma/client";
+
+export async function GET(request: NextRequest) {
+  const users = await prisma.user.findMany();
+  return NextResponse.json(users);
 }
+```
 
-const prisma = globalForPrisma.prisma ?? prismaClientSingleton()
+### Get a Single User
 
-export default prisma
+To retrieve a single user by ID, use the following code in `api/users/[id]/route.ts`:
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+```typescript
+import prisma from "@/prisma/client";
+
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: parseInt(params.id),
+    },
+  });
+  if (!user)
+    return NextResponse.json({ error: "User not found" }, { status: 404 });
+
+  return NextResponse.json(user);
+}
 ```
