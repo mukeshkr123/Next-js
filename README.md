@@ -1034,3 +1034,44 @@ export async function DELETE(
   return NextResponse.json({});
 }
 ```
+
+## Uploading Files
+
+### Choosing a Cloud Platform
+
+1. Amazon S3
+2. Google Cloud
+3. Microsoft Azure
+4. Cloudinary
+
+### Setting up Cloudinary
+
+1. Signup cloudinary
+2. Run the following command `npm i next-cloudinary`
+3. Add this in .env `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME="<Your Cloud Name>"
+`
+
+### Upload Files
+
+Create a component or page
+
+```jsx
+"use client";
+
+import { CldUploadWidget } from "next-cloudinary";
+import React from "react";
+
+const UploadPage = () => {
+  return (
+    <CldUploadWidget uploadPreset="s0jas6ry">
+      {({ open }) => (
+        <button className="btn btn-primary" onClick={() => open()}>
+          Upload
+        </button>
+      )}
+    </CldUploadWidget>
+  );
+};
+
+export default UploadPage;
+```
