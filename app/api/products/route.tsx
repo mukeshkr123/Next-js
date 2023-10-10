@@ -1,36 +1,45 @@
 import { NextRequest, NextResponse } from "next/server";
 import schema from "./schema";
-import { error } from "console";
+import prisma from "@/prisma/client";
 
-//get products
-export function GET(request: NextRequest) {
-  return NextResponse.json([
-    {
-      id: 1,
-      name: "milk ",
-      price: 34,
-    },
-    {
-      id: 2,
-      name: "rice",
-      price: 34,
-    },
-  ]);
+// Get products
+export async function GET(request: NextRequest) {
+  try {
+    const products = await prisma.product.findMany();
+    return NextResponse.json(products);
+  } catch (error) {
+    return NextResponse.json(
+      { error: "An error occurred while fetching products" },
+      { status: 500 }
+    );
+  }
 }
 
-//create a product
+// Create a product
 export async function POST(request: NextRequest) {
-  const body = await request.json();
-  const validation = schema.safeParse(body);
-  if (!validation.success)
-    return NextResponse.json(validation.error.errors, { status: 404 });
+  try {
+    const body = await request.json();
+    const validation = schema.safeParse(body);
 
-  return NextResponse.json(
-    {
-      id: 10,
-      name: body.name,
-      price: body.price,
-    },
-    { status: 201 }
-  );
+    if (!validation.success) {
+      return NextResponse.json(
+        { error: "Validation failed", details: validation.error.errors },
+        { status: 400 }
+      );
+    }
+
+    const newProduct = await prisma.product.create({
+      data: {
+        name: body.name,
+        price: body.price,
+      },
+    });
+
+    return NextResponse.json(newProduct, { status: 201 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "An error occurred while creating a product" },
+      { status: 500 }
+    );
+  }
 }
