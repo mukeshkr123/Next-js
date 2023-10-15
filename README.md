@@ -1141,3 +1141,53 @@ const UploadPage = () => {
 
 export default UploadPage;
 ```
+
+## Sending Emails
+
+### Setting up React Email
+
+install the package
+
+`npm i react-email @react-email/components`
+
+create a script in package.json file
+
+````jsx
+ "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },```
+````
+
+create a emails folder in root directory of app
+and create a basic email template
+
+```jsx
+import React from "react";
+import {
+  Html,
+  Body,
+  Container,
+  Text,
+  Link,
+  Preview,
+} from "@react-email/components";
+
+const WelcomeTempalte = ({ name }: { name: string }) => {
+  return (
+    <Html>
+      <Preview>Welcome abroad! </Preview>
+      <Body>
+        <Container>
+          <Text> Hello {name}</Text>
+          <Link href="https://www.google.com">www.google.com</Link>
+        </Container>
+      </Body>
+    </Html>
+  );
+};
+
+export default WelcomeTempalte;
+```

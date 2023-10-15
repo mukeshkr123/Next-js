@@ -2,6 +2,7 @@
   "name": "next-js",
   "version": "0.1.0",
   "private": true,
+  "preview-email": "email dev -p 3030",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,6 +11,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.4.1",
+    "@react-email/components": "^0.0.7",
     "fast-sort": "^3.4.0",
     "lodash": "^4.17.21",
     "next": "latest",
@@ -17,6 +19,7 @@
     "prisma": "^5.4.1",
     "react": "latest",
     "react-dom": "latest",
+    "react-email": "^1.9.5",
     "zod": "^3.22.2"
   },
   "devDependencies": {
