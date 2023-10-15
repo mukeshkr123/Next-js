@@ -1152,14 +1152,15 @@ install the package
 
 create a script in package.json file
 
-````jsx
+```jsx
  "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
-  },```
-````
+    "lint": "next lint",
+    "preview-email": "email dev -p 3030"
+  },
+```
 
 create a emails folder in root directory of app
 and create a basic email template
@@ -1190,4 +1191,16 @@ const WelcomeTempalte = ({ name }: { name: string }) => {
 };
 
 export default WelcomeTempalte;
+```
+
+## Previewing Emails
+
+run the command `npm run preview-email`
+
+befor running the above following command
+add this on .gitignore file
+
+```
+# react-email
+.react-email/
 ```
