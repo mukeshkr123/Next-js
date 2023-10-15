@@ -1140,32 +1140,39 @@ const UploadPage = () => {
 };
 
 export default UploadPage;
+
 ```
 
-## Sending Emails
+# Sending Emails with Next.js, React Email, and Resend
 
-### Setting up React Email
+- [Node.js](https://nodejs.org/)
+- [Next.js](https://nextjs.org/)
+- [React Email](https://www.npmjs.com/package/react-email)
+- [Resend](https://www.npmjs.com/package/resend)
 
-install the package
+## Installation
 
-`npm i react-email @react-email/components`
+Install the required packages by running the following command:
 
-create a script in package.json file
-
-```jsx
- "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "preview-email": "email dev -p 3030"
-  },
+```bash
+npm install react-email @react-email/components resend
 ```
 
-create a emails folder in root directory of app
-and create a basic email template
+## Setting up React Email
 
-```jsx
+1. Create a script in your `package.json` file to preview emails. Add the following to your scripts section:
+
+```json
+"scripts": {
+  "preview-email": "email dev -p 3030"
+}
+```
+
+2. Create an "emails" folder in the root directory of your app to store email templates.
+
+3. Create a basic email template (e.g., `WelcomeTemplate.js`) inside the "emails" folder:
+
+```javascript
 import React from "react";
 import {
   Html,
@@ -1176,10 +1183,10 @@ import {
   Preview,
 } from "@react-email/components";
 
-const WelcomeTempalte = ({ name }: { name: string }) => {
+const WelcomeTemplate = ({ name }) => {
   return (
     <Html>
-      <Preview>Welcome abroad! </Preview>
+      <Preview>Welcome abroad!</Preview>
       <Body>
         <Container>
           <Text> Hello {name}</Text>
@@ -1190,24 +1197,32 @@ const WelcomeTempalte = ({ name }: { name: string }) => {
   );
 };
 
-export default WelcomeTempalte;
+export default WelcomeTemplate;
 ```
 
 ## Previewing Emails
 
-run the command `npm run preview-email`
+1. To preview your emails, run the following command:
 
-befor running the above following command
-add this on .gitignore file
-
+```bash
+npm run preview-email
 ```
-# react-email
+
+2. Add the following line to your `.gitignore` file to prevent generated files from being committed to your repository:
+
+```plaintext
 .react-email/
 ```
 
-### Styling Emails
+## Styling Emails
 
-```jsx
+If you want to style your emails using Tailwind CSS, you can do the following:
+
+1. Install Tailwind CSS in your project.
+
+2. Update your email template (e.g., `WelcomeTemplate.js`) to use Tailwind styles:
+
+```javascript
 import React from "react";
 import {
   Html,
@@ -1219,10 +1234,10 @@ import {
   Preview,
 } from "@react-email/components";
 
-const WelcomeTempalte = ({ name }: { name: string }) => {
+const WelcomeTemplate = ({ name }) => {
   return (
     <Html>
-      <Preview>Welcome abroad! </Preview>
+      <Preview>Welcome abroad!</Preview>
       <Tailwind>
         <Body className="bg-white">
           <Container>
@@ -1235,13 +1250,37 @@ const WelcomeTempalte = ({ name }: { name: string }) => {
   );
 };
 
-const body = {
-  background: "#fff",
-};
-
-const heading = {
-  fontSize: "32px",
-};
-
-export default WelcomeTempalte;
+export default WelcomeTemplate;
 ```
+
+## Sending Emails with Resend
+
+1. Install the Resend library:
+
+```bash
+npm install resend
+```
+
+2. Create a route file (e.g., `route.ts`) in the `api/send-email` directory:
+
+```javascript
+import { Resend } from "resend";
+import WelcomeTemplate from "@/emails/WelcomeTemplate";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+export async function POST() {
+  await resend.emails.send({
+    from: "your_email@gmail.com",
+    to: "recipient@example.com",
+    subject: "Welcome to Your Website",
+    react: <WelcomeTemplate name="Mukesh" />,
+  });
+
+  return NextResponse.json({});
+}
+```
+
+Make sure to replace `"your_email@gmail.com"`, `"recipient@example.com"`, and `"Mukesh"` with your specific values.
+
+That's it! You've now set up email templates and the ability to send emails in your Next.js application using React Email and Resend.

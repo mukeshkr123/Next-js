@@ -9,15 +9,15 @@ import {
   Preview,
 } from "@react-email/components";
 
-const WelcomeTempalte = ({ name }: { name: string }) => {
+const WelcomeTemplate = ({ name }: { name: string }) => {
   return (
     <Html>
-      <Preview>Welcome abroad! </Preview>
+      <Preview>Welcome aboard!</Preview>
       <Tailwind>
         <Body className="bg-white">
           <Container>
-            <Text className="font-bold text-3xl"> Hello {name}</Text>
-            <Link href="https://www.google.com">www.google.com</Link>
+            <Text className="font-bold text-3xl">Hello {name}</Text>
+            <Link href="Your Link URL">Visit our website</Link>
           </Container>
         </Body>
       </Tailwind>
@@ -25,12 +25,4 @@ const WelcomeTempalte = ({ name }: { name: string }) => {
   );
 };
 
-const body = {
-  background: "#fff",
-};
-
-const heading = {
-  fontSize: "32px",
-};
-
-export default WelcomeTempalte;
+export default WelcomeTemplate;
