@@ -1143,14 +1143,14 @@ export default UploadPage;
 
 ```
 
-# Sending Emails with Next.js, React Email, and Resend
+## Sending Emails with Next.js, React Email, and Resend
 
 - [Node.js](https://nodejs.org/)
 - [Next.js](https://nextjs.org/)
 - [React Email](https://www.npmjs.com/package/react-email)
 - [Resend](https://www.npmjs.com/package/resend)
 
-## Installation
+### Installation
 
 Install the required packages by running the following command:
 
@@ -1158,7 +1158,7 @@ Install the required packages by running the following command:
 npm install react-email @react-email/components resend
 ```
 
-## Setting up React Email
+### Setting up React Email
 
 1. Create a script in your `package.json` file to preview emails. Add the following to your scripts section:
 
@@ -1200,7 +1200,7 @@ const WelcomeTemplate = ({ name }) => {
 export default WelcomeTemplate;
 ```
 
-## Previewing Emails
+### Previewing Emails
 
 1. To preview your emails, run the following command:
 
@@ -1214,7 +1214,7 @@ npm run preview-email
 .react-email/
 ```
 
-## Styling Emails
+### Styling Emails
 
 If you want to style your emails using Tailwind CSS, you can do the following:
 
@@ -1253,7 +1253,7 @@ const WelcomeTemplate = ({ name }) => {
 export default WelcomeTemplate;
 ```
 
-## Sending Emails with Resend
+### Sending Emails with Resend
 
 1. Install the Resend library:
 
